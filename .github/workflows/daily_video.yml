@@ -76,6 +76,11 @@ jobs:
             curl -sL "https://cdn.pixabay.com/audio/2024/02/14/audio_8e153a8e5a.mp3" -o "bgm/inspiring-cinematic.mp3"
             curl -sL "https://cdn.pixabay.com/audio/2023/10/06/audio_4ce9a67f51.mp3" -o "bgm/soft-piano.mp3"
             echo "Downloaded 3 BGM tracks"
+                      # Re-encode BGM to ensure proper MP3 format
+          for f in bgm/*.mp3; do
+            ffmpeg -y -i "$f" -acodec libmp3lame -ab 192k "bgm/temp.mp3" && mv "bgm/temp.mp3" "$f"
+          done
+          echo "Re-encoded BGM files"
           fi
 
       - name: 📂 Create directories
