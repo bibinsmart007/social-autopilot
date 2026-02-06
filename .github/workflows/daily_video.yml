@@ -8,9 +8,6 @@
 #   Fri  1PM → 09:00 UTC
 #   Sat 10AM → 06:00 UTC
 #   Sun  5PM → 13:00 UTC
-#
-# We schedule the workflow to run at ALL these times,
-# then a gate step checks if today matches the current cron slot.
 
 name: Daily Social Video
 
@@ -62,25 +59,80 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-          
-      - name: Download font and BGM assets
+
+      - name: 🎨 Download font and BGM assets
         run: |
-          mkdir -p fonts bgm
+          mkdir -p fonts bgm fallback_clips
+
+          # ── Montserrat Bold font ──
           if [ ! -f fonts/Montserrat-Bold.ttf ]; then
-            curl -sL "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-Bold.ttf" -o "fonts/Montserrat-Bold.ttf"
-            echo "Downloaded Montserrat-Bold.ttf"
+            echo "📥 Downloading Montserrat-Bold.ttf..."
+            curl -sL --retry 3 --retry-delay 2 \
+              "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-Bold.ttf" \
+              -o fonts/Montserrat-Bold.ttf
+
+            # Validate — real TTF is at least ~50KB
+            if [ -f fonts/Montserrat-Bold.ttf ] && [ "$(wc -c < fonts/Montserrat-Bold.ttf)" -gt 10000 ]; then
+              echo "✅ Montserrat-Bold.ttf downloaded ($(wc -c < fonts/Montserrat-Bold.ttf) bytes)"
+            else
+              echo "⚠️  Font download may have failed — will use system fallback"
+              rm -f fonts/Montserrat-Bold.ttf
+            fi
+          else
+            echo "✅ Montserrat-Bold.ttf already exists"
           fi
-          BGM_COUNT=$(find bgm/ -name "*.mp3" 2>/dev/null | wc -l)
+
+          # ── BGM tracks from Pixabay CDN (royalty-free, no attribution required) ──
+          # Only download if bgm/ has fewer than 1 valid MP3
+          BGM_COUNT=$(find bgm/ -name "*.mp3" -size +10k 2>/dev/null | wc -l)
           if [ "$BGM_COUNT" -lt 1 ]; then
-            curl -sL "https://cdn.pixabay.com/audio/2024/11/28/audio_a0869e1edf.mp3" -o "bgm/ambient-chill.mp3"
-            curl -sL "https://cdn.pixabay.com/audio/2024/02/14/audio_8e153a8e5a.mp3" -o "bgm/inspiring-cinematic.mp3"
-            curl -sL "https://cdn.pixabay.com/audio/2023/10/06/audio_4ce9a67f51.mp3" -o "bgm/soft-piano.mp3"
-            echo "Downloaded 3 BGM tracks"
-                      # Re-encode BGM to ensure proper MP3 format
-          for f in bgm/*.mp3; do
-            ffmpeg -y -i "$f" -acodec libmp3lame -ab 192k "bgm/temp.mp3" && mv "bgm/temp.mp3" "$f"
-          done
-          echo "Re-encoded BGM files"
+            echo "📥 Downloading BGM tracks from Pixabay..."
+
+            # Track 1: Upbeat motivational (health & wealth content)
+            curl -sL --retry 3 --retry-delay 2 --max-time 60 \
+              "https://cdn.pixabay.com/audio/2024/11/28/audio_3a42e68da3.mp3" \
+              -o bgm/bgm_01_upbeat.mp3
+
+            # Track 2: Calm ambient (mental wellbeing content)
+            curl -sL --retry 3 --retry-delay 2 --max-time 60 \
+              "https://cdn.pixabay.com/audio/2024/09/11/audio_d0e93db165.mp3" \
+              -o bgm/bgm_02_calm.mp3
+
+            # Track 3: Inspiring corporate (business & ecommerce content)
+            curl -sL --retry 3 --retry-delay 2 --max-time 60 \
+              "https://cdn.pixabay.com/audio/2024/10/30/audio_39e96d80c6.mp3" \
+              -o bgm/bgm_03_inspiring.mp3
+
+            # Track 4: Soft piano (versatile, all niches)
+            curl -sL --retry 3 --retry-delay 2 --max-time 60 \
+              "https://cdn.pixabay.com/audio/2024/08/27/audio_4e1efe7e3f.mp3" \
+              -o bgm/bgm_04_piano.mp3
+
+            # Track 5: Energetic electronic (listicle & tips style)
+            curl -sL --retry 3 --retry-delay 2 --max-time 60 \
+              "https://cdn.pixabay.com/audio/2024/10/08/audio_6414efbc7c.mp3" \
+              -o bgm/bgm_05_energetic.mp3
+
+            # Validate — remove anything under 10KB (broken downloads)
+            for f in bgm/bgm_*.mp3; do
+              if [ -f "$f" ]; then
+                SIZE=$(wc -c < "$f")
+                if [ "$SIZE" -lt 10000 ]; then
+                  echo "⚠️  Removing invalid BGM: $f ($SIZE bytes)"
+                  rm -f "$f"
+                else
+                  echo "✅ $(basename "$f") — $(( SIZE / 1024 )) KB"
+                fi
+              fi
+            done
+
+            FINAL_COUNT=$(find bgm/ -name "*.mp3" -size +10k 2>/dev/null | wc -l)
+            echo "📊 BGM tracks ready: $FINAL_COUNT"
+            if [ "$FINAL_COUNT" -lt 1 ]; then
+              echo "⚠️  No BGM downloaded — video will use voiceover only (still works fine)"
+            fi
+          else
+            echo "✅ BGM folder already has $BGM_COUNT track(s)"
           fi
 
       - name: 📂 Create directories
