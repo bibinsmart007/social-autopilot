@@ -420,9 +420,31 @@ def composite_video(
 
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"   ⚠️  FFmpeg stderr: {result.stderr[-500:]}")
-        raise RuntimeError("FFmpeg composite failed!")
-
+        print(f"    ⚠️ FFmpeg stderr: {result.stderr[-500:]}")
+        # Retry without BGM if audio mixing failed
+        if bgm_path:
+            print("    🔄 Retrying without BGM...")
+            cmd_no_bgm = [
+                "ffmpeg", "-y",
+                "-i", video_path, "-i", voice_path,
+                "-filter_complex", f"[1:a]volume={voice_vol},loudnorm=I=-16:TP=-1.5:LRA=11[aout]",
+                "-vf", vf_string,
+                "-map", "0:v",
+                "-map", "[aout]",
+                "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                "-c:a", "aac", "-b:a", "192k",
+                "-shortest",
+                "-t", str(min(duration + 1, VIDEO["duration_seconds"] + 5)),
+                "-r", str(VIDEO["fps"]),
+                "-movflags", "+faststart",
+                output_path,
+            ]
+            result2 = subprocess.run(cmd_no_bgm, capture_output=True, text=True)
+            if result2.returncode != 0:
+                raise RuntimeError("FFmpeg composite failed even without BGM!")
+            print("    ✅ Video created without BGM")
+        else:
+            raise RuntimeError("FFmpeg composite failed!")
 
 # ── Main ─────────────────────────────────────────────────────
 
