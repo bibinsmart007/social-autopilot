@@ -1,0 +1,574 @@
+{
+  "scripts": [
+    {
+      "niche": "health_wellness",
+      "hook": "Your morning routine is silently destroying your energy.",
+      "body": [
+        "Most people reach for coffee first thing, but that spikes cortisol when it's already high.",
+        "Instead, drink water, get sunlight, and move your body for just 10 minutes.",
+        "This resets your circadian rhythm and gives you natural energy that lasts.",
+        "Try it for one week and you'll never go back."
+      ],
+      "cta": "Save this and follow for more health hacks!",
+      "ig_caption": "\u2600\ufe0f Fix your morning, fix your life.\n\nStop reaching for coffee first thing.\n\nDo this instead:\n\u2192 Hydrate\n\u2192 Sunlight\n\u2192 Move\n\nSave this! \ud83d\udd16",
+      "fb_caption": "I changed one thing about my morning and my energy completely shifted. Here's what I did differently...",
+      "title_text": "Fix Your Mornings",
+      "dynamic_hashtags": [
+        "#morningroutine",
+        "#energyboost",
+        "#healthhack"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "You're probably dehydrated right now and don't even know it.",
+      "body": [
+        "75% of people are chronically dehydrated.",
+        "Even mild dehydration drops your focus by 25% and your mood by 20%.",
+        "The fix is simple: drink half your body weight in ounces daily.",
+        "Add a pinch of sea salt to your first glass for better absorption."
+      ],
+      "cta": "Follow for daily health tips that actually work!",
+      "ig_caption": "\ud83d\udca7 Dehydration is the silent energy killer.\n\nFix this one thing and watch everything change.\n\nSave for later! \ud83d\udd16",
+      "fb_caption": "Here's something wild \u2014 most of us are walking around dehydrated and blaming it on stress, bad sleep, or aging...",
+      "title_text": "Stay Hydrated",
+      "dynamic_hashtags": [
+        "#hydration",
+        "#healthtip",
+        "#wellness"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "This one food is causing 90% of your inflammation.",
+      "body": [
+        "Refined sugar is the biggest driver of chronic inflammation.",
+        "It triggers insulin spikes, damages gut bacteria, and accelerates aging.",
+        "Replace it with natural alternatives like honey, dates, or berries.",
+        "Your joints, skin, and energy will thank you within two weeks."
+      ],
+      "cta": "Share this with someone who needs to hear it!",
+      "ig_caption": "\ud83d\udd25 Inflammation starts in your kitchen.\n\nCut this one thing and feel the difference.\n\nTag someone who needs this! \ud83d\udc47",
+      "fb_caption": "I cut one food from my diet and the difference in how I felt was honestly shocking...",
+      "title_text": "Fight Inflammation",
+      "dynamic_hashtags": [
+        "#inflammation",
+        "#guthealth",
+        "#nutrition"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "Walking 30 minutes a day does more than most gym workouts.",
+      "body": [
+        "Studies show daily walking reduces heart disease risk by 35%.",
+        "It lowers cortisol, improves digestion, and boosts creative thinking.",
+        "You don't need a gym membership to transform your health.",
+        "Start with a 15-minute walk after lunch and build from there."
+      ],
+      "cta": "Follow for simple health wins!",
+      "ig_caption": "\ud83d\udeb6 The most underrated exercise? Walking.\n\nNo gym needed. No equipment needed.\n\nJust 30 minutes a day.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "Forget expensive gym memberships. The most powerful exercise is completely free and you can do it right now...",
+      "title_text": "Walk More Daily",
+      "dynamic_hashtags": [
+        "#walking",
+        "#fitness",
+        "#simplehealth"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "The rich don't work for money. Here's what they do instead.",
+      "body": [
+        "Wealthy people build systems that generate income while they sleep.",
+        "They invest in assets: stocks, real estate, businesses, and intellectual property.",
+        "The key shift is moving from trading time for money to owning things that grow.",
+        "Start small: invest just 10% of every paycheck consistently."
+      ],
+      "cta": "Follow for daily wealth building tips!",
+      "ig_caption": "\ud83d\udcb0 Stop trading time for money.\n\nStart building income that works while you sleep.\n\nSave this roadmap! \ud83d\udd16",
+      "fb_caption": "The biggest money lesson I ever learned changed everything about how I think about work and income...",
+      "title_text": "Build Wealth Smart",
+      "dynamic_hashtags": [
+        "#wealthbuilding",
+        "#passiveincome",
+        "#investing"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "Compound interest is the 8th wonder of the world. Here's why.",
+      "body": [
+        "If you invest $200 per month starting at age 25, you'll have over $500,000 by 60.",
+        "That's the magic of compound interest \u2014 your money earns money on its earnings.",
+        "The secret isn't how much you invest, it's how early you start.",
+        "Even small amounts create massive wealth over 20-30 years."
+      ],
+      "cta": "Save this and start investing today!",
+      "ig_caption": "\ud83d\udcc8 $200/month \u2192 $500,000+\n\nThat's compound interest.\n\nThe earlier you start, the richer you get.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "I wish someone had shown me this math when I was 20. The power of compound interest is actually insane...",
+      "title_text": "Compound Interest",
+      "dynamic_hashtags": [
+        "#compoundinterest",
+        "#investing",
+        "#financialfreedom"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "90% of millionaires have this one habit in common.",
+      "body": [
+        "They pay themselves first \u2014 before bills, before expenses, before anything.",
+        "They automate a fixed percentage of income into investments.",
+        "This removes willpower from the equation and makes wealth building automatic.",
+        "Set up an automatic transfer today, even if it's just 5% of your income."
+      ],
+      "cta": "Follow for more money habits that work!",
+      "ig_caption": "\ud83c\udfe6 The #1 millionaire habit?\n\nPay yourself FIRST.\n\nAutomate it. Forget it. Get rich.\n\nFollow for more! \ud83d\udcb0",
+      "fb_caption": "I started doing this one thing with my money 3 years ago and it completely changed my financial trajectory...",
+      "title_text": "Pay Yourself First",
+      "dynamic_hashtags": [
+        "#moneytips",
+        "#millionairehabits",
+        "#savings"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "Your emergency fund should have exactly this much money.",
+      "body": [
+        "Financial experts agree: 3-6 months of living expenses is the sweet spot.",
+        "This protects you from job loss, medical bills, and unexpected repairs.",
+        "Keep it in a high-yield savings account, not under your mattress.",
+        "Build it gradually \u2014 aim for one month first, then keep going."
+      ],
+      "cta": "Share this with someone who needs financial security!",
+      "ig_caption": "\ud83c\udfe6 No emergency fund = financial stress.\n\n3-6 months of expenses.\nHigh-yield savings.\nBuild it NOW.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "Real talk: if you don't have an emergency fund, everything else in your financial life is built on sand...",
+      "title_text": "Emergency Fund",
+      "dynamic_hashtags": [
+        "#emergencyfund",
+        "#financialsecurity",
+        "#moneytips"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "Your product descriptions are costing you sales. Here's the fix.",
+      "body": [
+        "Most sellers describe features. Top sellers describe transformations.",
+        "Don't say 'stainless steel water bottle.' Say 'keeps your water ice-cold for 24 hours.'",
+        "Focus on how the product makes the customer's life better.",
+        "Add social proof, urgency, and a clear call to action on every product page."
+      ],
+      "cta": "Follow for ecommerce tips that boost sales!",
+      "ig_caption": "\ud83d\uded2 Features tell. Benefits SELL.\n\nRewrite your product descriptions today.\n\nSave this framework! \ud83d\udd16",
+      "fb_caption": "I rewrote our product descriptions using this simple framework and our conversion rate jumped 40%...",
+      "title_text": "Sell Benefits",
+      "dynamic_hashtags": [
+        "#ecommercetips",
+        "#copywriting",
+        "#onlineselling"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "Stop spending on ads until you fix this one thing.",
+      "body": [
+        "If your website takes more than 3 seconds to load, you're losing 40% of visitors.",
+        "Speed is the most overlooked conversion factor in ecommerce.",
+        "Compress images, remove unnecessary plugins, and use a fast hosting provider.",
+        "Fix this first, then your ads will actually convert."
+      ],
+      "cta": "Follow for more ecommerce growth hacks!",
+      "ig_caption": "\u26a1 Slow website = lost money.\n\n3 seconds. That's all you get.\n\nFix your speed FIRST, then run ads.\n\nSave! \ud83d\udd16",
+      "fb_caption": "We were throwing money at ads wondering why nothing was converting. Turns out the problem was much simpler than we thought...",
+      "title_text": "Speed Wins Sales",
+      "dynamic_hashtags": [
+        "#ecommerce",
+        "#websitespeed",
+        "#conversionrate"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "Email marketing makes $42 for every $1 spent. Are you using it?",
+      "body": [
+        "Email is the highest ROI marketing channel and most small businesses ignore it.",
+        "Start with a simple welcome sequence: introduce yourself, share your story, offer value.",
+        "Send one email per week with tips, behind-the-scenes content, or exclusive offers.",
+        "Your email list is the only audience you truly own."
+      ],
+      "cta": "Save this and start building your email list today!",
+      "ig_caption": "\ud83d\udce7 $42 return for every $1 spent.\n\nThat's email marketing.\n\nAnd you're probably not doing it.\n\nStart NOW. Save this! \ud83d\udd16",
+      "fb_caption": "If you're running an online business and not building an email list, you're leaving the most profitable channel completely untouched...",
+      "title_text": "Email Marketing ROI",
+      "dynamic_hashtags": [
+        "#emailmarketing",
+        "#ecommercegrowth",
+        "#digitalmarketing"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "The biggest mistake new online sellers make costs them everything.",
+      "body": [
+        "They try to sell to everyone instead of a specific audience.",
+        "A niche product with loyal fans always beats a generic product with no identity.",
+        "Define your ideal customer: their age, problems, desires, and where they hang out.",
+        "Then build everything around serving that one person exceptionally well."
+      ],
+      "cta": "Follow for more business wisdom!",
+      "ig_caption": "\ud83c\udfaf Sell to everyone = sell to no one.\n\nPick your niche.\nKnow your customer.\nWin the game.\n\nFollow for more! \ud83d\udca1",
+      "fb_caption": "The single biggest lesson from my first year selling online: trying to appeal to everyone is the fastest way to fail...",
+      "title_text": "Find Your Niche",
+      "dynamic_hashtags": [
+        "#nichebusiness",
+        "#entrepreneur",
+        "#onlineselling"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "Your phone is rewiring your brain. Here's how to take control.",
+      "body": [
+        "The average person checks their phone 96 times a day. That's once every 10 minutes.",
+        "Each notification triggers a dopamine hit that trains your brain to crave distraction.",
+        "Try this: put your phone in another room for the first hour after waking up.",
+        "You'll notice more clarity, less anxiety, and deeper focus within days."
+      ],
+      "cta": "Save this and try it tomorrow morning!",
+      "ig_caption": "\ud83d\udcf1 Your phone is hijacking your brain.\n\n1 hour without it each morning changes everything.\n\nTry it. Save this! \ud83d\udd16",
+      "fb_caption": "I started leaving my phone in another room for just the first hour of my day. The difference in how I feel is remarkable...",
+      "title_text": "Digital Detox",
+      "dynamic_hashtags": [
+        "#digitaldetox",
+        "#mentalhealth",
+        "#mindfulness"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "Gratitude isn't just positive thinking. It literally rewires your brain.",
+      "body": [
+        "Neuroscience shows that practicing gratitude increases serotonin and dopamine naturally.",
+        "It takes just 2 minutes: write down 3 things you're grateful for each morning.",
+        "After 21 days, your brain starts automatically scanning for positives instead of negatives.",
+        "This is the simplest mental health habit with the biggest payoff."
+      ],
+      "cta": "Follow for daily mindset tips!",
+      "ig_caption": "\ud83d\ude4f 3 things. Every morning. 2 minutes.\n\nGratitude literally changes your brain chemistry.\n\nStart today. Save this! \ud83d\udd16",
+      "fb_caption": "I was skeptical about gratitude journaling until I actually tried it for 30 days straight. Here's what happened...",
+      "title_text": "Gratitude Works",
+      "dynamic_hashtags": [
+        "#gratitude",
+        "#mindset",
+        "#mentalwellness"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "The way you talk to yourself matters more than you think.",
+      "body": [
+        "Your inner voice shapes your confidence, decisions, and even your health.",
+        "Replace 'I can't do this' with 'I'm learning how to do this.'",
+        "This small shift from fixed to growth mindset changes everything over time.",
+        "Speak to yourself like you would to your best friend."
+      ],
+      "cta": "Share this with someone who needs to hear it!",
+      "ig_caption": "\ud83e\udde0 Your inner voice is the most powerful voice in your life.\n\nMake it a kind one.\n\nTag someone who needs this! \ud83d\udc9c",
+      "fb_caption": "Something I had to learn the hard way: the voice inside your head can be your biggest ally or your worst enemy. You get to choose...",
+      "title_text": "Kind Self-Talk",
+      "dynamic_hashtags": [
+        "#selftalk",
+        "#growthmindset",
+        "#selfcompassion"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "Procrastination isn't laziness. It's fear in disguise.",
+      "body": [
+        "Research shows procrastination is an emotional regulation problem, not a time management one.",
+        "We avoid tasks that make us feel anxious, bored, or overwhelmed.",
+        "The fix: break the task into a 2-minute version and just start.",
+        "Starting is the hardest part. Once you begin, momentum takes over."
+      ],
+      "cta": "Save this for the next time you're stuck!",
+      "ig_caption": "\u23f0 Procrastination = fear, not laziness.\n\nThe 2-minute rule:\nMake it tiny. Just start.\n\nMomentum does the rest.\n\nSave! \ud83d\udd16",
+      "fb_caption": "I used to beat myself up about procrastinating until I learned what's actually causing it. It changed my whole approach...",
+      "title_text": "Beat Procrastination",
+      "dynamic_hashtags": [
+        "#procrastination",
+        "#productivity",
+        "#mentalhealth"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "You're sleeping wrong and it's aging you faster.",
+      "body": [
+        "Poor sleep increases cortisol, weakens immunity, and accelerates aging.",
+        "The fix: keep your room cool at 65-68\u00b0F, pitch dark, and device-free.",
+        "Stop eating 3 hours before bed and avoid blue light after sunset.",
+        "Quality sleep is the most powerful anti-aging tool that costs nothing."
+      ],
+      "cta": "Follow for health tips that transform your life!",
+      "ig_caption": "\ud83d\ude34 Sleep is the ultimate biohack.\n\nCool room. Dark room. No screens.\n\nFix your sleep, fix everything.\n\nSave! \ud83d\udd16",
+      "fb_caption": "I optimized one thing and saw improvements in my energy, skin, mood, and focus. It wasn't a supplement or a workout \u2014 it was sleep...",
+      "title_text": "Sleep Better Now",
+      "dynamic_hashtags": [
+        "#sleeptips",
+        "#biohacking",
+        "#healthyliving"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "Here's why most people stay broke even with a good salary.",
+      "body": [
+        "Lifestyle inflation is the silent wealth killer.",
+        "Every time you get a raise, your spending rises to match it.",
+        "The solution: keep your lifestyle the same and invest every raise.",
+        "In 10 years, you'll have built serious wealth while others are still living paycheck to paycheck."
+      ],
+      "cta": "Follow if you're serious about building wealth!",
+      "ig_caption": "\ud83d\udcc9 More money \u2260 more wealth.\n\nLifestyle inflation keeps you broke.\n\nInvest every raise. Build real wealth.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "My income tripled in 5 years but I was still stressed about money. Then I figured out what was really going on...",
+      "title_text": "Avoid Lifestyle Creep",
+      "dynamic_hashtags": [
+        "#lifestyleinflation",
+        "#wealthtips",
+        "#financialliteracy"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "I grew from 0 to 1000 customers with zero ad spend. Here's how.",
+      "body": [
+        "Content marketing is the most underrated growth strategy for new businesses.",
+        "Create valuable content that solves your ideal customer's problems.",
+        "Post consistently on 1-2 platforms where your audience already hangs out.",
+        "Value-first content builds trust. Trust converts to sales without paid ads."
+      ],
+      "cta": "Follow for organic growth strategies!",
+      "ig_caption": "\ud83d\ude80 Zero ad spend \u2192 1000 customers.\n\nThe secret? Content that actually helps people.\n\nFollow for more growth hacks! \ud83d\udca1",
+      "fb_caption": "When I started my business, I had zero budget for ads. So I tried something different \u2014 and it worked better than any ad ever could...",
+      "title_text": "Organic Growth",
+      "dynamic_hashtags": [
+        "#organicgrowth",
+        "#contentmarketing",
+        "#noads"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "Setting boundaries isn't selfish. It's survival.",
+      "body": [
+        "People-pleasing leads to burnout, resentment, and lost identity.",
+        "Healthy boundaries protect your energy and teach others how to treat you.",
+        "Start small: say 'let me think about it' instead of an automatic yes.",
+        "The people who respect your boundaries are the ones worth keeping."
+      ],
+      "cta": "Tag someone who needs to hear this!",
+      "ig_caption": "\ud83d\udee1\ufe0f Boundaries aren't walls.\n\nThey're doors with locks.\n\nYou decide who gets in.\n\nSave this! \ud83d\udc9c",
+      "fb_caption": "Learning to say no was the hardest thing I ever did \u2014 and the most freeing. Here's what I wish I knew sooner...",
+      "title_text": "Set Boundaries",
+      "dynamic_hashtags": [
+        "#boundaries",
+        "#selfworth",
+        "#mentalstrength"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "Breathing wrong is making you anxious. Try this instead.",
+      "body": [
+        "Shallow chest breathing activates your stress response all day long.",
+        "The fix: breathe from your diaphragm. In for 4, hold for 4, out for 6.",
+        "This activates your parasympathetic nervous system and calms anxiety instantly.",
+        "Practice this 3 times a day for 2 minutes and watch your stress melt away."
+      ],
+      "cta": "Save this breathing technique and try it right now!",
+      "ig_caption": "\ud83c\udf2c\ufe0f Breathe: 4-4-6\n\nIn for 4. Hold for 4. Out for 6.\n\nInstant calm. Try it NOW.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "A therapist taught me this one breathing technique and it's honestly been more effective than anything else I've tried for anxiety...",
+      "title_text": "Breathe To Calm",
+      "dynamic_hashtags": [
+        "#breathwork",
+        "#anxietyrelief",
+        "#calmdown"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "You don't need more money. You need a better system.",
+      "body": [
+        "The 50-30-20 rule is the simplest budgeting system that works.",
+        "50% for needs, 30% for wants, 20% for savings and investments.",
+        "Automate everything so you never have to think about it.",
+        "The best financial plan is one you actually follow consistently."
+      ],
+      "cta": "Follow for practical money tips!",
+      "ig_caption": "\ud83d\udcca 50-30-20 Rule:\n\n50% \u2192 Needs\n30% \u2192 Wants\n20% \u2192 Investing\n\nAutomate it. Done.\n\nSave! \ud83d\udd16",
+      "fb_caption": "I tried every budgeting app and spreadsheet out there. In the end, this simple rule was all I needed...",
+      "title_text": "Simple Budget Rule",
+      "dynamic_hashtags": [
+        "#budgeting",
+        "#503020rule",
+        "#personalfinance"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "Your customers are telling you exactly what to sell next. Are you listening?",
+      "body": [
+        "Customer reviews and messages contain gold \u2014 product ideas, pain points, and desires.",
+        "Read every review on your store and your competitors' stores.",
+        "Look for patterns: what do people wish existed? What frustrates them?",
+        "The best product ideas come from listening, not guessing."
+      ],
+      "cta": "Follow for more ecommerce wisdom!",
+      "ig_caption": "\ud83d\udc42 Your customers are giving you the answers.\n\nRead reviews. Find patterns. Build what they want.\n\nFollow for more! \ud83d\udca1",
+      "fb_caption": "Our best-selling product came from reading a complaint in a competitor's review section. Here's how we turned it into a product...",
+      "title_text": "Listen To Customers",
+      "dynamic_hashtags": [
+        "#customerresearch",
+        "#productideas",
+        "#ecommerce"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "Journaling for 5 minutes a day can replace years of therapy.",
+      "body": [
+        "Writing your thoughts down externalizes them, making them manageable.",
+        "You don't need a fancy journal. Just answer: What am I feeling and why?",
+        "Over time, you'll spot patterns in your triggers, fears, and desires.",
+        "Self-awareness is the foundation of every mental health breakthrough."
+      ],
+      "cta": "Start journaling tonight. Save this as your reminder!",
+      "ig_caption": "\ud83d\udcd3 5 minutes. One question.\n\n'What am I feeling and why?'\n\nThis changes everything.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "My therapist gave me one assignment that made a bigger difference than months of sessions combined...",
+      "title_text": "Journal Daily",
+      "dynamic_hashtags": [
+        "#journaling",
+        "#selfawareness",
+        "#mentalhealth"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "One tablespoon of this every morning changes everything.",
+      "body": [
+        "Apple cider vinegar before meals improves digestion and blood sugar control.",
+        "Mix one tablespoon in warm water with a little honey.",
+        "Studies show it reduces bloating, supports gut bacteria, and aids weight management.",
+        "Start with half a tablespoon if you're new to it and work your way up."
+      ],
+      "cta": "Follow for natural health remedies!",
+      "ig_caption": "\ud83c\udf4e ACV Morning Routine:\n\n1 tbsp + warm water + honey\n\nDigestion \u2705 Blood sugar \u2705 Gut health \u2705\n\nSave! \ud83d\udd16",
+      "fb_caption": "I was skeptical about apple cider vinegar until I tried it for 30 days straight. Here's what I honestly noticed...",
+      "title_text": "ACV Morning Hack",
+      "dynamic_hashtags": [
+        "#applecidervinegar",
+        "#naturalhealth",
+        "#guthealth"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "Stop saving money. Start investing it instead.",
+      "body": [
+        "A savings account earns 0.5% while inflation eats 3-6% of your money yearly.",
+        "Your savings are literally losing value every day they sit in the bank.",
+        "Index funds are the simplest way to start investing with as little as $50.",
+        "Time in the market beats timing the market. Start now, not perfect."
+      ],
+      "cta": "Follow for investing made simple!",
+      "ig_caption": "\ud83c\udfe6 Savings account = losing money slowly.\n\nIndex funds = building wealth steadily.\n\nStart with $50. Start TODAY.\n\nSave! \ud83d\udd16",
+      "fb_caption": "The moment I realized my savings account was actually making me poorer was the moment everything changed...",
+      "title_text": "Invest Don't Save",
+      "dynamic_hashtags": [
+        "#indexfunds",
+        "#investingtips",
+        "#wealthbuilding"
+      ]
+    },
+    {
+      "niche": "ecommerce_business",
+      "hook": "Social proof doubles your conversion rate overnight.",
+      "body": [
+        "People trust other people more than they trust brands.",
+        "Add customer photos, reviews, and testimonials everywhere on your site.",
+        "Show real numbers: '5,000+ happy customers' or '4.8 stars from 200 reviews.'",
+        "If you don't have reviews yet, offer a discount in exchange for honest feedback."
+      ],
+      "cta": "Save this and update your store today!",
+      "ig_caption": "\u2b50 No reviews = no trust = no sales.\n\nAdd social proof EVERYWHERE.\n\nPhotos. Reviews. Numbers.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "We added one section to our product pages and our sales jumped 47% in the first month. It was embarrassingly simple...",
+      "title_text": "Social Proof Sells",
+      "dynamic_hashtags": [
+        "#socialproof",
+        "#ecommercetips",
+        "#conversionrate"
+      ]
+    },
+    {
+      "niche": "mental_wellbeing",
+      "hook": "You're not lazy. You're overwhelmed. There's a difference.",
+      "body": [
+        "When everything feels urgent, your brain shuts down to protect itself.",
+        "The cure: write down everything on your mind. All of it. Get it out of your head.",
+        "Then pick just ONE thing to do today. Just one.",
+        "Small progress compounds. One thing today, one tomorrow. That's how you climb out."
+      ],
+      "cta": "Send this to someone who needs it right now.",
+      "ig_caption": "\ud83e\udde0 Overwhelmed \u2260 lazy.\n\nBrain dump \u2192 Pick ONE thing \u2192 Do it.\n\nRepeat tomorrow.\n\nYou've got this. \ud83d\udc9c",
+      "fb_caption": "If you've been calling yourself lazy but your to-do list has 47 things on it, please read this...",
+      "title_text": "You're Not Lazy",
+      "dynamic_hashtags": [
+        "#overwhelm",
+        "#burnout",
+        "#mentalwellness"
+      ]
+    },
+    {
+      "niche": "health_wellness",
+      "hook": "10 minutes of stretching beats an hour at the gym.",
+      "body": [
+        "Most chronic pain comes from tight muscles and poor mobility, not weakness.",
+        "A simple 10-minute stretch routine reduces back pain, neck tension, and headaches.",
+        "Focus on hip flexors, hamstrings, chest, and neck \u2014 the tightest areas for desk workers.",
+        "Do it first thing in the morning and your body will thank you all day."
+      ],
+      "cta": "Follow for simple health routines that work!",
+      "ig_caption": "\ud83e\uddd8 Stretching > gym for most people.\n\n10 minutes. Morning. Daily.\n\nPain gone. Energy up.\n\nSave this! \ud83d\udd16",
+      "fb_caption": "My physical therapist told me something that surprised me: most of my issues would go away with 10 minutes of daily stretching...",
+      "title_text": "Stretch Daily",
+      "dynamic_hashtags": [
+        "#stretching",
+        "#mobility",
+        "#painrelief"
+      ]
+    },
+    {
+      "niche": "wealth_finance",
+      "hook": "The 72 rule can predict exactly when your money will double.",
+      "body": [
+        "Divide 72 by your interest rate and you get the years to double your investment.",
+        "At 8% returns, your money doubles every 9 years.",
+        "That means $10,000 invested at 25 becomes $80,000 by 52 without adding a single dollar.",
+        "This is why starting early is the biggest advantage in wealth building."
+      ],
+      "cta": "Save this formula and share it with a friend!",
+      "ig_caption": "\ud83d\udd22 The Rule of 72:\n\n72 \u00f7 return rate = years to double\n\n8% \u2192 doubles every 9 years\n\nStart early. Win big.\n\nSave! \ud83d\udd16",
+      "fb_caption": "There is a simple math trick that shows exactly when your investments will double. Once you see it, you will never look at saving the same way...",
+      "title_text": "Rule of 72",
+      "dynamic_hashtags": [
+        "#ruleof72",
+        "#investingtips",
+        "#compoundgrowth"
+      ]
+    }
+  ]
+}
