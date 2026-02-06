@@ -16,6 +16,30 @@ PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY")
 PEXELS_VIDEO_URL = "https://api.pexels.com/videos/search"
 
 
+FONT_URL = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-Bold.ttf"
+FONT_PATH = "fonts/Montserrat-Bold.ttf"
+FALLBACK_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+
+def ensure_font() -> str:
+    """Ensure font exists: try custom -> auto-download -> system fallback."""
+    if os.path.exists(FONT_PATH):
+        return FONT_PATH
+    # Try downloading
+    try:
+        os.makedirs("fonts", exist_ok=True)
+        resp = requests.get(FONT_URL, timeout=15)
+        resp.raise_for_status()
+        with open(FONT_PATH, "wb") as f:
+            f.write(resp.content)
+        print(f"  Downloaded {FONT_PATH}")
+        return FONT_PATH
+    except Exception as e:
+        print(f"  Font download failed: {e}")
+    # Fallback to system font
+    if os.path.exists(FALLBACK_FONT):
+        return FALLBACK_FONT
+    return FONT_PATH  # Let FFmpeg handle missing font error
+
 # ── Stock footage download ────────────────────────────────────
 
 @retry_with_backoff(description="Pexels API search")
@@ -323,9 +347,7 @@ def composite_video(
         hook_y = "(h-text_h)/2"
 
     # Font
-    font_path = "fonts/Montserrat-Bold.ttf"
-    if not os.path.exists(font_path):
-        font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+        font_path = ensure_font()
 
     title_size = int(VIDEO["title_font_size"])
     text_size = int(VIDEO["text_font_size"])
