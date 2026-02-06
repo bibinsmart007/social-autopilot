@@ -1,0 +1,198 @@
+{
+  "sources": {
+    "bible": {
+      "display_name": "The Bible",
+      "icon": "✝️"
+    },
+    "bhagavad_gita": {
+      "display_name": "Bhagavad Gita",
+      "icon": "🙏"
+    },
+    "quran": {
+      "display_name": "The Quran",
+      "icon": "☪️"
+    }
+  },
+  "quotes": [
+    {
+      "text": "For I know the plans I have for you, plans to prosper you and not to harm you, plans to give you hope and a future.",
+      "source": "bible",
+      "reference": "Jeremiah 29:11"
+    },
+    {
+      "text": "I can do all things through Him who strengthens me.",
+      "source": "bible",
+      "reference": "Philippians 4:13"
+    },
+    {
+      "text": "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
+      "source": "bible",
+      "reference": "Joshua 1:9"
+    },
+    {
+      "text": "Trust in the Lord with all your heart and lean not on your own understanding.",
+      "source": "bible",
+      "reference": "Proverbs 3:5"
+    },
+    {
+      "text": "The Lord is my shepherd; I shall not want.",
+      "source": "bible",
+      "reference": "Psalm 23:1"
+    },
+    {
+      "text": "And we know that in all things God works for the good of those who love Him.",
+      "source": "bible",
+      "reference": "Romans 8:28"
+    },
+    {
+      "text": "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.",
+      "source": "bible",
+      "reference": "Philippians 4:6"
+    },
+    {
+      "text": "The peace of God, which transcends all understanding, will guard your hearts and your minds.",
+      "source": "bible",
+      "reference": "Philippians 4:7"
+    },
+    {
+      "text": "Come to me, all you who are weary and burdened, and I will give you rest.",
+      "source": "bible",
+      "reference": "Matthew 11:28"
+    },
+    {
+      "text": "Be still, and know that I am God.",
+      "source": "bible",
+      "reference": "Psalm 46:10"
+    },
+    {
+      "text": "Faith is the substance of things hoped for, the evidence of things not seen.",
+      "source": "bible",
+      "reference": "Hebrews 11:1"
+    },
+    {
+      "text": "Love is patient, love is kind. It does not envy, it does not boast, it is not proud.",
+      "source": "bible",
+      "reference": "1 Corinthians 13:4"
+    },
+    {
+      "text": "You have the right to perform your duty, but you are not entitled to the fruits of your actions.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 2, Verse 47"
+    },
+    {
+      "text": "The soul is neither born, and nor does it die. It is eternal, ever-existing, and primeval.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 2, Verse 20"
+    },
+    {
+      "text": "When meditation is mastered, the mind is unwavering like the flame of a candle in a windless place.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 6, Verse 19"
+    },
+    {
+      "text": "A person can rise through the efforts of their own mind; they can also degrade themselves. The mind is the friend of the soul, and its enemy as well.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 6, Verse 5"
+    },
+    {
+      "text": "Whatever happened, happened for the good. Whatever is happening, is happening for the good. Whatever will happen, will also happen for the good.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 2, Verse 18"
+    },
+    {
+      "text": "Change is the law of the universe. You can be a millionaire or a pauper in an instant.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 2, Verse 14"
+    },
+    {
+      "text": "Set your heart upon your work but never on its reward.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 2, Verse 47"
+    },
+    {
+      "text": "The peace of God comes to those who are free from passion, fear, and anger, and who are steadfast in mind.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 2, Verse 56"
+    },
+    {
+      "text": "There is neither this world, nor the world beyond, nor happiness for the one who doubts.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 4, Verse 40"
+    },
+    {
+      "text": "No one who does good work will ever come to a bad end, either here or in the world to come.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 6, Verse 40"
+    },
+    {
+      "text": "Those who are wise see the same soul in all living beings, and all living beings in that one soul.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 5, Verse 18"
+    },
+    {
+      "text": "The one who has conquered themselves is far greater than the one who has defeated a thousand armies.",
+      "source": "bhagavad_gita",
+      "reference": "Chapter 6, Verse 6"
+    },
+    {
+      "text": "Verily, with hardship comes ease.",
+      "source": "quran",
+      "reference": "Surah Ash-Sharh 94:6"
+    },
+    {
+      "text": "God does not burden a soul beyond that it can bear.",
+      "source": "quran",
+      "reference": "Surah Al-Baqarah 2:286"
+    },
+    {
+      "text": "And He found you lost and guided you.",
+      "source": "quran",
+      "reference": "Surah Ad-Duha 93:7"
+    },
+    {
+      "text": "So remember Me, and I will remember you. Be thankful to Me, and never ungrateful.",
+      "source": "quran",
+      "reference": "Surah Al-Baqarah 2:152"
+    },
+    {
+      "text": "And whoever puts their trust in God, He will be enough for them.",
+      "source": "quran",
+      "reference": "Surah At-Talaq 65:3"
+    },
+    {
+      "text": "Indeed, God is with the patient.",
+      "source": "quran",
+      "reference": "Surah Al-Baqarah 2:153"
+    },
+    {
+      "text": "My mercy encompasses all things.",
+      "source": "quran",
+      "reference": "Surah Al-A'raf 7:156"
+    },
+    {
+      "text": "Do not lose hope in the mercy of God. Indeed, God forgives all sins.",
+      "source": "quran",
+      "reference": "Surah Az-Zumar 39:53"
+    },
+    {
+      "text": "And We have certainly made the Quran easy for remembrance, so is there any who will remember?",
+      "source": "quran",
+      "reference": "Surah Al-Qamar 54:17"
+    },
+    {
+      "text": "He it is who sent down tranquility into the hearts of the believers, that they may grow in faith.",
+      "source": "quran",
+      "reference": "Surah Al-Fath 48:4"
+    },
+    {
+      "text": "And your Lord says: Call upon Me, I will respond to you.",
+      "source": "quran",
+      "reference": "Surah Ghafir 40:60"
+    },
+    {
+      "text": "God is the Light of the heavens and the earth.",
+      "source": "quran",
+      "reference": "Surah An-Nur 24:35"
+    }
+  ]
+}
