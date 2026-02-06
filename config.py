@@ -28,7 +28,7 @@ BRAND_PROFILES = {
         "logo_path": None,  # Set to e.g. "assets/logo.png" to overlay a logo
         "cta_text": "Follow for daily tips! 🔔",
         "ayrshare_key_env": "AYRSHARE_API_KEY",  # env var name
-        "platforms": ["instagram", "facebook"],
+        "platforms": ["instagram", "facebook", "linkedin", "tiktok", "twitter"],
         "niches": [
             "health_wellness",
             "wealth_finance",
@@ -44,7 +44,7 @@ BRAND_PROFILES = {
     #     "logo_path": None,
     #     "cta_text": "Follow for money tips! 💰",
     #     "ayrshare_key_env": "AYRSHARE_API_KEY_BRAND2",
-    #     "platforms": ["instagram", "facebook"],
+    #     "platforms": ["instagram", "facebook", "linkedin", "tiktok", "twitter"],
     #     "niches": ["wealth_finance"],
     # },
 }
