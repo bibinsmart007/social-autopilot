@@ -1,6 +1,7 @@
 """
 Step 3: Generate video — multi-clip stitching with crossfade transitions,
-Ken Burns effect, niche-colored text overlays, and fallback clips.
+Ken Burns effect, niche-colored text overlays, inspirational faith quotes,
+auto-font download, fallback clips, and graceful BGM handling.
 """
 
 import os
@@ -9,38 +10,238 @@ import glob
 import random
 import subprocess
 import requests
-from config import VIDEO, PATHS, VIDEO_STYLES, NICHES, get_profile
+import textwrap
+from config import VIDEO, PATHS, VIDEO_STYLES, NICHES, QUOTES, get_profile
 from utils import retry_with_backoff, load_json
 
 PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY")
 PEXELS_VIDEO_URL = "https://api.pexels.com/videos/search"
 
 
-FONT_URL = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-Bold.ttf"
-FONT_PATH = "fonts/Montserrat-Bold.ttf"
-FALLBACK_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+# ── Inspirational quotes ─────────────────────────────────────
+
+def select_quote() -> dict:
+    """
+    Select a random inspirational quote from Bible, Bhagavad Gita, or Quran.
+    Returns dict with text, source, reference, display_name, icon.
+    Returns None if quotes are disabled or file is missing.
+    """
+    if not QUOTES.get("enabled", False):
+        return None
+
+    quotes_file = QUOTES.get("sources_file", "data/quotes.json")
+    data = load_json(quotes_file, default=None)
+
+    if not data or "quotes" not in data:
+        print("   ℹ️  No quotes file found — skipping quote overlay")
+        return None
+
+    sources = data.get("sources", {})
+    all_quotes = data["quotes"]
+
+    if not all_quotes:
+        return None
+
+    chosen = random.choice(all_quotes)
+
+    # Enrich with source display info
+    source_key = chosen.get("source", "")
+    source_info = sources.get(source_key, {})
+    chosen["display_name"] = source_info.get("display_name", source_key.title())
+    chosen["icon"] = source_info.get("icon", "📖")
+
+    return chosen
+
+
+def _wrap_quote_text(text: str, max_chars: int = 40) -> list:
+    """
+    Wrap quote text into lines for FFmpeg drawtext.
+    Returns list of line strings.
+    """
+    return textwrap.wrap(text, width=max_chars)
+
+
+def build_quote_filters(
+    quote: dict,
+    font_path: str,
+    voice_duration: float,
+) -> list:
+    """
+    Build FFmpeg drawtext filter strings for the inspirational quote overlay.
+    Returns list of filter strings to append to the video filter chain.
+    """
+    if not quote:
+        return []
+
+    quote_text = quote.get("text", "")
+    reference = quote.get("reference", "")
+    display_name = quote.get("display_name", "")
+    icon = quote.get("icon", "📖")
+
+    # Attribution line: "— Jeremiah 29:11, The Bible"
+    attribution = f"-- {reference}, {display_name}"
+
+    show_dur = QUOTES.get("show_duration", 6)
+    q_font_size = QUOTES.get("font_size", 40)
+    ref_font_size = QUOTES.get("reference_font_size", 28)
+
+    # Calculate when to show the quote
+    show_at = QUOTES.get("show_at", "middle")
+    if show_at == "start":
+        start_t = 1.0
+    elif show_at == "end":
+        start_t = max(voice_duration - show_dur - 2, voice_duration * 0.6)
+    else:  # middle
+        start_t = voice_duration * 0.4
+
+    end_t = start_t + show_dur
+
+    # Wrap quote into multiple lines for display
+    lines = _wrap_quote_text(quote_text, max_chars=35)
+
+    # Calculate total height needed
+    line_height = q_font_size + 8
+    total_lines = len(lines) + 1  # +1 for attribution
+    total_block_height = (total_lines * line_height) + 40  # padding
+
+    filters = []
+
+    # Semi-transparent background box for readability
+    box_y = f"h*0.35"
+    filters.append(
+        f"drawbox=y={box_y}:w=iw:h={total_block_height}:"
+        f"color=black@0.65:t=fill:"
+        f"enable='between(t,{start_t},{end_t})'"
+    )
+
+    # Draw each line of the quote
+    for i, line in enumerate(lines):
+        escaped_line = _escape(line)
+        line_y_offset = int(0.35 * 1920) + 20 + (i * line_height)
+        filters.append(
+            f"drawtext=text='{escaped_line}':"
+            f"fontfile={font_path}:fontsize={q_font_size}:"
+            f"fontcolor=white:x=(w-text_w)/2:y={line_y_offset}:"
+            f"enable='between(t,{start_t},{end_t})'"
+        )
+
+    # Attribution line (smaller, slightly dimmer)
+    attr_escaped = _escape(attribution)
+    attr_y = int(0.35 * 1920) + 20 + (len(lines) * line_height) + 10
+    filters.append(
+        f"drawtext=text='{attr_escaped}':"
+        f"fontfile={font_path}:fontsize={ref_font_size}:"
+        f"fontcolor=white@0.8:x=(w-text_w)/2:y={attr_y}:"
+        f"enable='between(t,{start_t},{end_t})'"
+    )
+
+    return filters
+
+
+# ── Font management ──────────────────────────────────────────
 
 def ensure_font() -> str:
-    """Ensure font exists: try custom -> auto-download -> system fallback."""
-    if os.path.exists(FONT_PATH):
-        return FONT_PATH
-    # Try downloading
+    """
+    Return path to a usable font file.
+    Priority: fonts/Montserrat-Bold.ttf → auto-download → system DejaVu fallback.
+    """
+    font_path = "fonts/Montserrat-Bold.ttf"
+    system_font = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+
+    # 1. Already exists locally
+    if os.path.exists(font_path) and os.path.getsize(font_path) > 10000:
+        return font_path
+
+    # 2. Try downloading from GitHub
     try:
         os.makedirs("fonts", exist_ok=True)
-        resp = requests.get(FONT_URL, timeout=15)
-        resp.raise_for_status()
-        with open(FONT_PATH, "wb") as f:
-            f.write(resp.content)
-        print(f"  Downloaded {FONT_PATH}")
-        return FONT_PATH
-    except Exception as e:
-        print(f"  Font download failed: {e}")
-    # Fallback to system font
-    if os.path.exists(FALLBACK_FONT):
-        return FALLBACK_FONT
-    return FONT_PATH  # Let FFmpeg handle missing font error
+        print("   📥 Downloading Montserrat-Bold.ttf...")
+        r = requests.get(
+            "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-Bold.ttf",
+            timeout=15,
+            allow_redirects=True,
+        )
+        r.raise_for_status()
 
-# ── Stock footage download ────────────────────────────────────
+        if len(r.content) > 10000:
+            with open(font_path, "wb") as f:
+                f.write(r.content)
+            print(f"   ✅ Font downloaded ({len(r.content) // 1024} KB)")
+            return font_path
+        else:
+            print("   ⚠️  Downloaded file too small — using system font")
+    except Exception as e:
+        print(f"   ⚠️  Font download failed: {e}")
+
+    # 3. System fallback
+    if os.path.exists(system_font):
+        print("   🔄 Using system font: DejaVu Sans Bold")
+        return system_font
+
+    # 4. Last resort — find any TTF on the system
+    try:
+        result = subprocess.run(
+            ["fc-list", "--format", "%{file}\n"],
+            capture_output=True, text=True,
+        )
+        fonts = [f.strip() for f in result.stdout.split("\n") if f.strip().endswith(".ttf")]
+        if fonts:
+            chosen = fonts[0]
+            print(f"   🔄 Using system font: {chosen}")
+            return chosen
+    except Exception:
+        pass
+
+    print("   ⚠️  No font found — text overlays may not render")
+    return system_font
+
+
+# ── BGM selection ────────────────────────────────────────────
+
+def select_bgm() -> str:
+    """
+    Randomly select a background music file.
+    Returns None gracefully if no BGM available — video will render
+    with voiceover only (no crash).
+    """
+    bgm_dir = PATHS["bgm_dir"]
+
+    if not os.path.exists(bgm_dir):
+        print("   ℹ️  No bgm/ directory — video will have voiceover only")
+        return None
+
+    # Find valid audio files (at least 10KB to filter out broken downloads)
+    bgm_files = []
+    for f in os.listdir(bgm_dir):
+        if f.lower().endswith((".mp3", ".wav", ".m4a")):
+            full_path = os.path.join(bgm_dir, f)
+            if os.path.getsize(full_path) > 10000:
+                bgm_files.append(full_path)
+
+    if not bgm_files:
+        print("   ℹ️  No valid BGM files found — video will have voiceover only")
+        return None
+
+    chosen = random.choice(bgm_files)
+
+    # Verify the file is actually playable
+    try:
+        probe = subprocess.run(
+            ["ffprobe", "-v", "quiet", "-show_entries", "format=duration",
+             "-of", "csv=p=0", chosen],
+            capture_output=True, text=True, timeout=5,
+        )
+        duration = float(probe.stdout.strip())
+        if duration < 5:
+            print(f"   ⚠️  BGM too short ({duration:.0f}s) — skipping BGM")
+            return None
+    except Exception:
+        pass  # Can't probe but file exists — try using it anyway
+
+    return chosen
+
+
+# ── Stock footage download ───────────────────────────────────
 
 @retry_with_backoff(description="Pexels API search")
 def _search_pexels(query: str, per_page: int = 15) -> list:
@@ -133,23 +334,7 @@ def _load_fallback_clips(existing: list, needed: int) -> list:
     return existing
 
 
-# ── BGM selection ─────────────────────────────────────────────
-
-def select_bgm() -> str:
-    """Randomly select a background music file."""
-    bgm_dir = PATHS["bgm_dir"]
-    if not os.path.exists(bgm_dir):
-        return None
-    bgm_files = [
-        f for f in os.listdir(bgm_dir)
-        if f.endswith((".mp3", ".wav", ".m4a"))
-    ]
-    if not bgm_files:
-        return None
-    return os.path.join(bgm_dir, random.choice(bgm_files))
-
-
-# ── FFmpeg helpers ────────────────────────────────────────────
+# ── FFmpeg helpers ───────────────────────────────────────────
 
 def get_duration(path: str) -> float:
     """Get media duration via ffprobe."""
@@ -172,7 +357,7 @@ def _escape(text: str) -> str:
     )
 
 
-# ── Clip processing with Ken Burns ───────────────────────────
+# ── Clip processing with Ken Burns ──────────────────────────
 
 def process_clip(clip_path: str, index: int, clip_dur: float) -> str:
     """Scale, crop, and apply Ken Burns effect to a single clip."""
@@ -183,14 +368,12 @@ def process_clip(clip_path: str, index: int, clip_dur: float) -> str:
 
     # Alternate zoom direction for variety
     if index % 2 == 0:
-        # Zoom in slowly
         zoompan = (
             f"zoompan=z='min(zoom+0.0005,{zoom})':"
             f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
             f"d={int(clip_dur * fps)}:s={w}x{h}:fps={fps}"
         )
     else:
-        # Slow pan from top-left to bottom-right
         zoompan = (
             f"zoompan=z='{zoom}':"
             f"x='if(eq(on,0),0,x+0.5)':"
@@ -214,7 +397,6 @@ def process_clip(clip_path: str, index: int, clip_dur: float) -> str:
 
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
-        # Fallback: simple scale/crop without Ken Burns
         cmd_simple = [
             "ffmpeg", "-y", "-i", clip_path,
             "-t", str(clip_dur),
@@ -231,7 +413,7 @@ def process_clip(clip_path: str, index: int, clip_dur: float) -> str:
     return out
 
 
-# ── Stitch clips with crossfade ──────────────────────────────
+# ── Stitch clips with crossfade ─────────────────────────────
 
 def stitch_clips(processed_clips: list, target_duration: float) -> str:
     """Concatenate clips with xfade crossfade transitions."""
@@ -241,8 +423,6 @@ def stitch_clips(processed_clips: list, target_duration: float) -> str:
     cf_dur = VIDEO["crossfade_duration"]
     output = "temp/stitched.mp4"
 
-    # Build xfade filter chain
-    # For N clips: need N-1 xfade filters chained
     filter_parts = []
     current_input = "[0:v]"
     clip_dur = VIDEO["clip_duration"]
@@ -259,7 +439,6 @@ def stitch_clips(processed_clips: list, target_duration: float) -> str:
         )
         current_input = out_label
 
-    # If only simple concat needed (xfade can be finicky)
     try:
         inputs = []
         for clip in processed_clips:
@@ -308,7 +487,7 @@ def _simple_concat(clips: list, target_duration: float) -> str:
     return output
 
 
-# ── Final composite ──────────────────────────────────────────
+# ── Final composite ─────────────────────────────────────────
 
 def composite_video(
     video_path: str,
@@ -316,9 +495,13 @@ def composite_video(
     bgm_path: str,
     script_data: dict,
     output_path: str,
+    quote: dict = None,
 ):
-    """Composite: video + voiceover + BGM + niche-colored text overlays."""
-
+    """
+    Composite: video + voiceover + optional BGM + niche-colored text overlays
+    + optional inspirational faith quote.
+    Handles missing BGM gracefully — renders voiceover-only video.
+    """
     voice_vol = VIDEO["voice_volume"]
     bgm_vol = VIDEO["bgm_volume"]
     duration = get_duration(voice_path)
@@ -346,8 +529,9 @@ def composite_video(
         title_y = "(h-text_h)/2"
         hook_y = "(h-text_h)/2"
 
-    # Font
-    font_path = ensure_font()        
+    # Font (auto-download if missing)
+    font_path = ensure_font()
+
     title_size = int(VIDEO["title_font_size"])
     text_size = int(VIDEO["text_font_size"])
 
@@ -376,17 +560,25 @@ def composite_video(
         f"enable='gte(t,{duration-6})'",
     ]
 
+    # ── Inspirational quote overlay ──
+    quote_filters = build_quote_filters(quote, font_path, duration)
+    text_filters.extend(quote_filters)
+
     # Optional logo overlay
     logo_path = get_profile().get("logo_path")
     if logo_path and os.path.exists(logo_path):
-        # We'll add logo as a separate input and overlay it
-        pass  # Handled below in cmd construction
+        text_filters.append(
+            f"movie={logo_path},scale=80:80[logo];"
+            f"[in][logo]overlay=W-100:30:format=auto,setpts=PTS"
+        )
 
     vf_string = ",".join(text_filters)
 
-    # ── Audio mix ──
+    # ── Audio mix — handles with or without BGM ──
+    has_bgm = bgm_path and os.path.exists(bgm_path)
     inputs = ["-i", video_path, "-i", voice_path]
-    if bgm_path and os.path.exists(bgm_path):
+
+    if has_bgm:
         inputs.extend(["-i", bgm_path])
         audio_filter = (
             f"[1:a]volume={voice_vol},loudnorm=I=-16:TP=-1.5:LRA=11[voice];"
@@ -395,12 +587,10 @@ def composite_video(
             f"afade=t=out:st={duration-3}:d=3[bgm];"
             f"[voice][bgm]amix=inputs=2:duration=first:dropout_transition=2[aout]"
         )
-        audio_map = "[aout]"
     else:
         audio_filter = (
             f"[1:a]volume={voice_vol},loudnorm=I=-16:TP=-1.5:LRA=11[aout]"
         )
-        audio_map = "[aout]"
 
     cmd = [
         "ffmpeg", "-y",
@@ -408,7 +598,7 @@ def composite_video(
         "-filter_complex", audio_filter,
         "-vf", vf_string,
         "-map", "0:v",
-        "-map", audio_map,
+        "-map", "[aout]",
         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
         "-c:a", "aac", "-b:a", "192k",
         "-shortest",
@@ -420,31 +610,11 @@ def composite_video(
 
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"    ⚠️ FFmpeg stderr: {result.stderr[-500:]}")
-        # Retry without BGM if audio mixing failed
-        if bgm_path:
-            print("    🔄 Retrying without BGM...")
-            cmd_no_bgm = [
-                "ffmpeg", "-y",
-                "-i", video_path, "-i", voice_path,
-                "-vf", vf_string,
-                "-map", "0:v",
-                "-map", "1:a",
-                "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-                "-c:a", "aac", "-b:a", "192k",
-                "-shortest",
-                "-t", str(min(duration + 1, VIDEO["duration_seconds"] + 5)),
-                "-r", str(VIDEO["fps"]),
-                "-movflags", "+faststart",
-                output_path,
-            ]
-            result2 = subprocess.run(cmd_no_bgm, capture_output=True, text=True)            if result2.returncode != 0:
-                raise RuntimeError("FFmpeg composite failed even without BGM!")
-            print("    ✅ Video created without BGM")
-        else:
-            raise RuntimeError("FFmpeg composite failed!")
+        print(f"   ⚠️  FFmpeg stderr: {result.stderr[-500:]}")
+        raise RuntimeError("FFmpeg composite failed!")
 
-# ── Main ─────────────────────────────────────────────────────
+
+# ── Main ────────────────────────────────────────────────────
 
 def main() -> str:
     """Full video generation pipeline."""
@@ -454,6 +624,18 @@ def main() -> str:
     voice_path = "temp/voiceover.mp3"
     voice_duration = get_duration(voice_path)
     print(f"   Voiceover: {voice_duration:.1f}s")
+
+    # Ensure font is available early
+    font = ensure_font()
+    print(f"   Font: {os.path.basename(font)}")
+
+    # Select inspirational quote
+    quote = select_quote()
+    if quote:
+        print(f"   📖 Quote: \"{quote['text'][:50]}...\"")
+        print(f"      — {quote['reference']}, {quote['display_name']}")
+    else:
+        print("   📖 Quote: disabled or unavailable")
 
     # Calculate clips needed
     clip_dur = VIDEO["clip_duration"]
@@ -477,16 +659,18 @@ def main() -> str:
     print("   ✂️  Stitching with crossfade...")
     stitched = stitch_clips(processed, voice_duration + 2)
 
-    # Select BGM
+    # Select BGM (gracefully returns None if unavailable)
     bgm_path = select_bgm()
     if bgm_path:
         print(f"   🎵 BGM: {os.path.basename(bgm_path)}")
+    else:
+        print("   🎵 BGM: None (voiceover only)")
 
-    # Final composite
+    # Final composite with quote
     os.makedirs("output", exist_ok=True)
     output_path = "output/final_video.mp4"
     print("   🎞️  Compositing final video...")
-    composite_video(stitched, voice_path, bgm_path, script_data, output_path)
+    composite_video(stitched, voice_path, bgm_path, script_data, output_path, quote)
 
     size_mb = os.path.getsize(output_path) / (1024 * 1024)
     print(f"   Size: {size_mb:.1f} MB")
