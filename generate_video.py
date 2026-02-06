@@ -437,8 +437,8 @@ def composite_video(
                 "-r", str(VIDEO["fps"]),
                 "-movflags", "+faststart",
                 output_path,
-            ]            result2 = subprocess.run(cmd_no_bgm, capture_output=True, text=True)
-            if result2.returncode != 0:
+            ]
+            result2 = subprocess.run(cmd_no_bgm, capture_output=True, text=True)            if result2.returncode != 0:
                 raise RuntimeError("FFmpeg composite failed even without BGM!")
             print("    ✅ Video created without BGM")
         else:
