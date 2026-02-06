@@ -347,12 +347,7 @@ def composite_video(
         hook_y = "(h-text_h)/2"
 
     # Font
-    font_path = FALLBACK_FONT  # default fallback        
-        try:
-                    font_path = ensure_font()
-                except Exception:
-                            pass  # keep FALLBACK_FONT
-
+    font_path = ensure_font()        
     title_size = int(VIDEO["title_font_size"])
     text_size = int(VIDEO["text_font_size"])
 
