@@ -427,10 +427,9 @@ def composite_video(
             cmd_no_bgm = [
                 "ffmpeg", "-y",
                 "-i", video_path, "-i", voice_path,
-                "-filter_complex", f"[1:a]volume={voice_vol},loudnorm=I=-16:TP=-1.5:LRA=11[aout]",
                 "-vf", vf_string,
                 "-map", "0:v",
-                "-map", "[aout]",
+                "-map", "1:a",
                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
                 "-c:a", "aac", "-b:a", "192k",
                 "-shortest",
@@ -438,8 +437,7 @@ def composite_video(
                 "-r", str(VIDEO["fps"]),
                 "-movflags", "+faststart",
                 output_path,
-            ]
-            result2 = subprocess.run(cmd_no_bgm, capture_output=True, text=True)
+            ]            result2 = subprocess.run(cmd_no_bgm, capture_output=True, text=True)
             if result2.returncode != 0:
                 raise RuntimeError("FFmpeg composite failed even without BGM!")
             print("    ✅ Video created without BGM")
