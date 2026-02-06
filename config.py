@@ -28,7 +28,7 @@ BRAND_PROFILES = {
         "logo_path": None,  # Set to e.g. "assets/logo.png" to overlay a logo
         "cta_text": "Follow for daily tips! 🔔",
         "ayrshare_key_env": "AYRSHARE_API_KEY",  # env var name
-        "platforms": ["instagram", "facebook", "linkedin", "tiktok", "twitter"],
+        "platforms": ["instagram", "facebook"],
         "niches": [
             "health_wellness",
             "wealth_finance",
@@ -44,7 +44,7 @@ BRAND_PROFILES = {
     #     "logo_path": None,
     #     "cta_text": "Follow for money tips! 💰",
     #     "ayrshare_key_env": "AYRSHARE_API_KEY_BRAND2",
-    #     "platforms": ["instagram", "facebook", "linkedin", "tiktok", "twitter"],
+    #     "platforms": ["instagram", "facebook"],
     #     "niches": ["wealth_finance"],
     # },
 }
@@ -311,6 +311,19 @@ RETRY = {
     "max_attempts": 3,
     "base_delay": 2,        # seconds — exponential backoff: 2, 4, 8
     "max_delay": 30,
+}
+
+# ============================================================
+# INSPIRATIONAL QUOTES OVERLAY
+# ============================================================
+
+QUOTES = {
+    "enabled": True,              # Set False to disable quote overlays
+    "show_duration": 6,           # How long the quote is displayed (seconds)
+    "show_at": "middle",          # When to show: "start", "middle", or "end"
+    "font_size": 40,
+    "reference_font_size": 28,
+    "sources_file": "data/quotes.json",
 }
 
 # ============================================================
