@@ -62,6 +62,21 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
+          
+      - name: Download font and BGM assets
+        run: |
+          mkdir -p fonts bgm
+          if [ ! -f fonts/Montserrat-Bold.ttf ]; then
+            curl -sL "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-Bold.ttf" -o "fonts/Montserrat-Bold.ttf"
+            echo "Downloaded Montserrat-Bold.ttf"
+          fi
+          BGM_COUNT=$(find bgm/ -name "*.mp3" 2>/dev/null | wc -l)
+          if [ "$BGM_COUNT" -lt 1 ]; then
+            curl -sL "https://cdn.pixabay.com/audio/2024/11/28/audio_a0869e1edf.mp3" -o "bgm/ambient-chill.mp3"
+            curl -sL "https://cdn.pixabay.com/audio/2024/02/14/audio_8e153a8e5a.mp3" -o "bgm/inspiring-cinematic.mp3"
+            curl -sL "https://cdn.pixabay.com/audio/2023/10/06/audio_4ce9a67f51.mp3" -o "bgm/soft-piano.mp3"
+            echo "Downloaded 3 BGM tracks"
+          fi
 
       - name: 📂 Create directories
         run: |
