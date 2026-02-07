@@ -68,6 +68,8 @@ def build_quote_filters(
 ) -> list:
     """
     Build FFmpeg drawtext filter strings for the inspirational quote overlay.
+    All Y positions use fixed pixel values (1080x1920 frame) to avoid
+    FFmpeg expression errors with text_h in drawbox filters.
     Returns list of filter strings to append to the video filter chain.
     """
     if not quote:
@@ -76,9 +78,8 @@ def build_quote_filters(
     quote_text = quote.get("text", "")
     reference = quote.get("reference", "")
     display_name = quote.get("display_name", "")
-    icon = quote.get("icon", "📖")
 
-    # Attribution line: "— Jeremiah 29:11, The Bible"
+    # Attribution line
     attribution = f"-- {reference}, {display_name}"
 
     show_dur = QUOTES.get("show_duration", 6)
@@ -96,43 +97,47 @@ def build_quote_filters(
 
     end_t = start_t + show_dur
 
-    # Wrap quote into multiple lines for display
+    # Wrap quote into multiple lines
     lines = _wrap_quote_text(quote_text, max_chars=35)
 
-    # Calculate total height needed
-    line_height = q_font_size + 8
+    # Fixed pixel calculations for 1920px height
+    frame_h = VIDEO["height"]  # 1920
+    line_height = q_font_size + 12
     total_lines = len(lines) + 1  # +1 for attribution
-    total_block_height = (total_lines * line_height) + 40  # padding
+    total_block_height = (total_lines * line_height) + 50  # padding
+
+    # Center the quote block vertically at ~35% from top
+    box_y_px = int(frame_h * 0.35)
+    first_line_y_px = box_y_px + 25  # padding inside box
 
     filters = []
 
-    # Semi-transparent background box for readability
-    box_y = f"h*0.35"
+    # Semi-transparent background box
     filters.append(
-        f"drawbox=y={box_y}:w=iw:h={total_block_height}:"
+        f"drawbox=y={box_y_px}:w=iw:h={total_block_height}:"
         f"color=black@0.65:t=fill:"
-        f"enable='between(t,{start_t},{end_t})'"
+        f"enable='between(t,{start_t:.2f},{end_t:.2f})'"
     )
 
     # Draw each line of the quote
     for i, line in enumerate(lines):
         escaped_line = _escape(line)
-        line_y_offset = int(0.35 * 1920) + 20 + (i * line_height)
+        line_y_px = first_line_y_px + (i * line_height)
         filters.append(
             f"drawtext=text='{escaped_line}':"
             f"fontfile={font_path}:fontsize={q_font_size}:"
-            f"fontcolor=white:x=(w-text_w)/2:y={line_y_offset}:"
-            f"enable='between(t,{start_t},{end_t})'"
+            f"fontcolor=white:x=(w-text_w)/2:y={line_y_px}:"
+            f"enable='between(t,{start_t:.2f},{end_t:.2f})'"
         )
 
     # Attribution line (smaller, slightly dimmer)
     attr_escaped = _escape(attribution)
-    attr_y = int(0.35 * 1920) + 20 + (len(lines) * line_height) + 10
+    attr_y_px = first_line_y_px + (len(lines) * line_height) + 10
     filters.append(
         f"drawtext=text='{attr_escaped}':"
         f"fontfile={font_path}:fontsize={ref_font_size}:"
-        f"fontcolor=white@0.8:x=(w-text_w)/2:y={attr_y}:"
-        f"enable='between(t,{start_t},{end_t})'"
+        f"fontcolor=white@0.8:x=(w-text_w)/2:y={attr_y_px}:"
+        f"enable='between(t,{start_t:.2f},{end_t:.2f})'"
     )
 
     return filters
@@ -517,17 +522,19 @@ def composite_video(
     niche_color = NICHES.get(niche, {}).get("color", "#FFFFFF")
     accent = NICHES.get(niche, {}).get("accent", "#FFFFFF")
 
-    # Text position from style
+    # Text position from style — use fixed pixel values for 1080x1920
+    # drawbox does NOT support text_h/text_w, so we must use absolute positions
+    h = VIDEO["height"]  # 1920
     text_pos = script_data.get("text_position", "center")
     if text_pos == "top":
-        title_y = "h*0.15"
-        hook_y = "h*0.22"
+        title_y_px = int(h * 0.15)     # 288
+        hook_y_px = int(h * 0.22)      # 422
     elif text_pos == "bottom":
-        title_y = "h*0.70"
-        hook_y = "h*0.77"
-    else:
-        title_y = "(h-text_h)/2"
-        hook_y = "(h-text_h)/2"
+        title_y_px = int(h * 0.70)     # 1344
+        hook_y_px = int(h * 0.77)      # 1478
+    else:  # center
+        title_y_px = int(h * 0.42)     # 806 — visually centered
+        hook_y_px = int(h * 0.48)      # 922
 
     # Font (auto-download if missing)
     font_path = ensure_font()
@@ -535,28 +542,28 @@ def composite_video(
     title_size = int(VIDEO["title_font_size"])
     text_size = int(VIDEO["text_font_size"])
 
-    # Build text overlay filters
+    # Build text overlay filters — all Y positions are absolute pixels
     text_filters = [
         # Title card (first 4 seconds)
-        f"drawbox=y={title_y}:w=iw:h=180:color=black@0.55:t=fill:enable='between(t,0.5,4.5)'",
+        f"drawbox=y={title_y_px}:w=iw:h=180:color=black@0.55:t=fill:enable='between(t,0.5,4.5)'",
         f"drawtext=text='{title}':fontfile={font_path}:fontsize={title_size}:"
-        f"fontcolor={niche_color}:x=(w-text_w)/2:y={title_y}+40:"
+        f"fontcolor={niche_color}:x=(w-text_w)/2:y={title_y_px + 40}:"
         f"enable='between(t,0.5,4.5)'",
 
         # Hook line (4-9 seconds)
-        f"drawbox=y={hook_y}:w=iw:h=140:color=black@0.55:t=fill:enable='between(t,4.5,9.5)'",
+        f"drawbox=y={hook_y_px}:w=iw:h=140:color=black@0.55:t=fill:enable='between(t,4.5,9.5)'",
         f"drawtext=text='{hook}':fontfile={font_path}:fontsize={text_size}:"
-        f"fontcolor=white:x=(w-text_w)/2:y={hook_y}+30:"
+        f"fontcolor=white:x=(w-text_w)/2:y={hook_y_px + 30}:"
         f"enable='between(t,4.5,9.5)'",
 
-        # Watermark (always visible)
+        # Watermark (always visible, bottom-left)
         f"drawtext=text='{watermark}':fontfile={font_path}:fontsize=26:"
-        f"fontcolor=white@0.6:x=30:y=h-55",
+        f"fontcolor=white@0.6:x=30:y={h - 55}",
 
         # CTA (last 6 seconds)
-        f"drawbox=y=h*0.58:w=iw:h=100:color={accent}@0.85:t=fill:enable='gte(t,{duration-6})'",
+        f"drawbox=y={int(h * 0.58)}:w=iw:h=100:color={accent}@0.85:t=fill:enable='gte(t,{duration-6})'",
         f"drawtext=text='{cta}':fontfile={font_path}:fontsize=38:"
-        f"fontcolor=white:x=(w-text_w)/2:y=h*0.58+25:"
+        f"fontcolor=white:x=(w-text_w)/2:y={int(h * 0.58) + 25}:"
         f"enable='gte(t,{duration-6})'",
     ]
 
